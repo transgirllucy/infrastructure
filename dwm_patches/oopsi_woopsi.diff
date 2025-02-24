@@ -1,0 +1,13 @@
+diff --git a/dwm.c b/dwm.c
+index f1d86b2..3bc5786 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -235,7 +235,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
+ static void zoom(const Arg *arg);
+ 
+ /* variables */
+-static const char broken[] = "broken";
++static const char broken[] = "oopsi woopsi, sorry OwO :3";
+ static char stext[256];
+ static int screen;
+ static int sw, sh;           /* X display screen geometry width, height */

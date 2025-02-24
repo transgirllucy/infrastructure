@@ -4,7 +4,7 @@
   ...
 }:
 {
-  imports = [ ];
+  imports = [ ./emacs.nix ];
 
   # TODO please change the username & home directory to your own
   home.username = "lucy";

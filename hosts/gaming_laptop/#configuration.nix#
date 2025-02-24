@@ -1,5 +1,6 @@
 # Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
+# your sy
+stem. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 {
   config,
@@ -18,7 +19,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = toString null; # Define your hostname.
+  #  networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
@@ -134,14 +135,6 @@
       pkgs.tty-clock
       pkgs.tenki
       pkgs.acpi
-      pkgs.brightnessctl
-      pkgs.furmark
-      pkgs.xorg.transset
-      pkgs.feh
-      pkgs.android-tools
-      pkgs.scrcpy
-      pkgs.nload
-      pkgs.nvtop
     ];
   };
 
@@ -170,8 +163,8 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 8000 ];
-  networking.firewall.allowedUDPPorts = [ 8000 ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -206,8 +199,6 @@
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.desktopManager.xfce.enable = true;
-  services.xserver.desktopManager.xfce.enableWaylandSession = true;
   hardware.graphics.enable = true;
   hardware.nvidia = {
     open = false;
@@ -228,29 +219,6 @@
       "steam-run"
       "minecraft-launcher"
       "teamspeak3"
-      "furmark"
-      "cuda-merged"
-      "cuda_cuobjdump"
-      "cuda_gdb"
-      "cuda_nvcc"
-      "cuda_nvdisasm"
-      "cuda_nvprune"
-      "cuda_cccl"
-      "cuda_cudart"
-      "cuda_cupti"
-      "cuda_cuxxfilt"
-      "cuda_nvml_dev"
-      "cuda_nvrtc"
-      "cuda_nvtx"
-      "cuda_profiler_api"
-      "cuda_sanitizer_api"
-      "libcublas"
-      "libcufft"
-      "libcurand"
-      "libcusolver"
-      "libnvjitlink"
-      "libcusparse"
-      "libnpp"
     ];
 
   nix = {
@@ -315,10 +283,4 @@
   ];
 
   programs.i3lock.enable = true;
-
-  services.picom.enable = true;
-
-  programs.zsh = {
-    enable = true;
-  };
 }
