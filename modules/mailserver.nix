@@ -1,5 +1,6 @@
 { config, pkgs, ...}: {
   mailserver = {
+    openFirewall = true;
     enable = true;
     fqdn = "mail.nix2twink.gay";
     domains = [ "nix2twink.gay" "mrtuxa.tech" "lucy.giving"];
