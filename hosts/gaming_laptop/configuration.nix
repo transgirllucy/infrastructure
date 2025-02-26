@@ -143,6 +143,7 @@
       pkgs.nload
       pkgs.nvtop
       pkgs.pfetch
+      pkgs.signal-desktop
     ];
   };
 

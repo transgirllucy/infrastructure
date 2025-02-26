@@ -12,14 +12,14 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nvf.url = "github:notashelf/nvf";
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
   };
 
   outputs =
     inputs@{
       nixpkgs,
       home-manager,
-      nvf,
+      simple-nixos-mailserver,
       self,
       ...
     }:
@@ -47,7 +47,17 @@
         server = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
           modules = [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.users.lucy = import ./home.nix;
+            }
             ./hosts/server/configuration.nix
+            simple-nixos-mailserver.nixosModule
+            ./modules/acme.nix
+            ./modules/mailserver.nix
           ];
         };
 
