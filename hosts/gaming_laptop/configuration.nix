@@ -144,6 +144,7 @@
       pkgs.nvtop
       pkgs.pfetch
       pkgs.signal-desktop
+      pkgs.element-desktop
     ];
   };
 

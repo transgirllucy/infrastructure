@@ -62,6 +62,7 @@
             ./modules/vaultwarden.nix
             ./modules/postgresql.nix
             ./modules/synapse.nix
+            ./modules/mastodon.nix
           ];
         };
 

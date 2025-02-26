@@ -66,5 +66,8 @@ in {
         }];
       }];
     };
+    extraConfigFiles = [
+	"/var/lib/matrix-synapse/shared-secret"
+    ];
   };
 }
