@@ -58,8 +58,8 @@
             simple-nixos-mailserver.nixosModule
             ./modules/acme.nix
             ./modules/mailserver.nix
-	    ./modules/nginx.nix
-	    ./modules/vaultwarden.nix
+            ./modules/nginx.nix
+            ./modules/vaultwarden.nix
           ];
         };
 
