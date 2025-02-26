@@ -63,6 +63,7 @@
             ./modules/postgresql.nix
             ./modules/synapse.nix
             ./modules/mastodon.nix
+            ./modules/jitsi.nix
           ];
         };
 
