@@ -44,6 +44,13 @@
             ./dwm.nix
           ];
         };
+        server = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./hosts/server/configuration.nix
+          ];
+        };
+
       };
     };
 }

@@ -142,6 +142,7 @@
       pkgs.scrcpy
       pkgs.nload
       pkgs.nvtop
+      pkgs.pfetch
     ];
   };
 
@@ -281,7 +282,6 @@
 
   programs.noisetorch.enable = true;
   virtualisation = {
-    waydroid.enable = true;
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
   };
@@ -321,4 +321,7 @@
   programs.zsh = {
     enable = true;
   };
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 }
