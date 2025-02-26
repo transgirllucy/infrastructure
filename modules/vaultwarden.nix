@@ -6,7 +6,7 @@
    config = {
      ROCKET_PORT = 8222;
      DOMAIN = "https://vault.nix2twink.gay";
-     SIGNUPS_ALLOWED = true;
+     SIGNUPS_ALLOWED = false;
      ROCKET_LOG = "critical";
    };
  };

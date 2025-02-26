@@ -61,7 +61,7 @@
             ./modules/nginx.nix
             ./modules/vaultwarden.nix
             ./modules/postgresql.nix
-	    ./modules/synapse.nix
+            ./modules/synapse.nix
           ];
         };
 
