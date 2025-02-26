@@ -60,6 +60,7 @@
             ./modules/mailserver.nix
             ./modules/nginx.nix
             ./modules/vaultwarden.nix
+	    ./modules/postgresql.nix
           ];
         };
 

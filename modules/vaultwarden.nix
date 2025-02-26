@@ -10,7 +10,7 @@
      ROCKET_LOG = "critical";
    };
  };
- services.nginx.virtualHosts.${config.services.vaultwarden.config.DOMAIN} = {
+ services.nginx.virtualHosts."vault.nix2twink.gay" = {
    enableACME = true;
    forceSSL = true;
    locations."/" = {
