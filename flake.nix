@@ -13,6 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -27,6 +28,7 @@
       nixosConfigurations = {
         # TODO please change the hostname to your own
         gaming_laptop = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
           system = "x86_64-linux";
           modules = [
             ./hosts/gaming_laptop/configuration.nix
@@ -66,7 +68,6 @@
             ./modules/jitsi.nix
           ];
         };
-
       };
     };
 }

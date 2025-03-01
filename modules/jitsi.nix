@@ -2,7 +2,7 @@
   services.jitsi-meet = {
     enable = true;
     hostName = "jitsi.nix2twink.gay";
-    prosody.lockdown = true;
+    prosody.lockdown = false;
     config = {
       enableWelcomePage = true;
       prejoinPageEnabled = true;

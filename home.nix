@@ -4,12 +4,14 @@
   ...
 }:
 {
-  imports = [ ./emacs.nix ];
+  imports = [
+    ./emacs.nix
+    ./hyprland.nix
+  ];
 
   # TODO please change the username & home directory to your own
   home.username = "lucy";
   home.homeDirectory = "/home/${config.home.username}";
-
   # link the configuration file in current directory to the specified location in home directory
   # home.file.".config/i3/wallpaper.jpg".source = ./wallpaper.jpg;
 
@@ -106,4 +108,13 @@
   home.stateVersion = "24.11";
 
   programs.home-manager.enable = true;
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs.obs-studio-plugins; [
+      wlrobs
+      obs-backgroundremoval
+      obs-pipewire-audio-capture
+    ];
+  };
 }

@@ -47,6 +47,8 @@
       (use-package lua-mode)
       (add-to-list 'auto-mode-alist '("\\.lua$" . lua-mode))
       (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
+ 
+      (use-package c3-ts-mode)
 
       (use-package yasnippet)
       (yas-global-mode 1)
