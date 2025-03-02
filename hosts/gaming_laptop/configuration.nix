@@ -159,6 +159,8 @@
       pkgs.texlivePackages.moderncv
       pkgs.scrot
       pkgs.gh
+      pkgs.macchanger
+      pkgs.easyeffects
     ];
   };
 
@@ -325,7 +327,6 @@
 
   services.emacs.enable = true;
 
-
   programs.i3lock.enable = true;
 
   services.picom.enable = true;
@@ -414,8 +415,23 @@
     nerd-fonts.ubuntu-sans
     nerd-fonts.victor-mono
     nerd-fonts.zed-mono
-    iosevka  
-];
+    iosevka
+  ];
 
   programs.evolution.enable = true;
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = true;
+      command_timeout = 1300;
+      scan_timeout = 50;
+      format = "$all$nix_shell$nodejs$lua$golang$rust$php$git_branch$git_commit$git_state$git_status\n$username$hostname$directory";
+      character = {
+        success_symbol = "[](bold green) ";
+        error_symbol = "[✗](bold red) ";
+      };
+    };
+  };
+
 }

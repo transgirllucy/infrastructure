@@ -40,10 +40,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.users.lucy = import ./home.nix;
+              home-manager.users.lucy = import ./modules/home.nix;
             }
-            ./gaming.nix
-            ./dwm.nix
+            ./modules/gaming.nix
+            ./modules/dwm.nix
           ];
         };
         server = nixpkgs.lib.nixosSystem {
@@ -54,7 +54,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              home-manager.users.lucy = import ./home.nix;
+              home-manager.users.lucy = import ./modules/home.nix;
             }
             ./hosts/server/configuration.nix
             simple-nixos-mailserver.nixosModule
@@ -66,6 +66,9 @@
             ./modules/synapse.nix
             ./modules/mastodon.nix
             ./modules/jitsi.nix
+            ./modules/uptime-kuma.nix
+            ./modules/dokuwiki.nix
+            ./modules/immich.nix
           ];
         };
       };
