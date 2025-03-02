@@ -1,4 +1,4 @@
-{...}: 
+{ ... }:
 let
 
   dokuwiki-template-mindthedark = pkgs.stdenv.mkDerivation rec {
@@ -12,7 +12,7 @@ let
     };
     installPhase = "mkdir -p $out; cp -R * $out/";
   };
-   dokuwiki-plugin-edittable = pkgs.stdenv.mkDerivation {
+  dokuwiki-plugin-edittable = pkgs.stdenv.mkDerivation {
     name = "edittable";
     src = pkgs.fetchzip {
       url = "https://github.com/cosmocode/edittable/archive/master.zip";
@@ -22,17 +22,18 @@ let
     installPhase = "mkdir -p $out; cp -R edittable-master/* $out/";
   };
 
-in {
-    services.dokuwiki.sites."wiki.nix2twink.gay" = {
-        plugins = [ dokuwiki-plugin-edittable ];
-        userewrite = true;
-        
-  enable = true;
-  settings = {
-    baseurl = "https://wiki.nix2twink.gay";
-    title = "My Wiki";
-    template = "mindthedark";
+in
+{
+  services.dokuwiki.sites."wiki.nix2twink.gay" = {
+    plugins = [ dokuwiki-plugin-edittable ];
+    userewrite = true;
+
+    enable = true;
+    settings = {
+      baseurl = "https://wiki.nix2twink.gay";
+      title = "My Wiki";
+      template = "mindthedark";
       tpl.mindthedark.autoDark = true;
+    };
   };
-};
 }

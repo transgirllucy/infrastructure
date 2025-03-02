@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ...}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   services.jitsi-meet = {
     enable = true;
     hostName = "jitsi.nix2twink.gay";

@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ...}: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   services.mastodon = {
     enable = true;
     localDomain = "cuddles.jetzt";

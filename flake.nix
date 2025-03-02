@@ -69,6 +69,7 @@
             ./modules/uptime-kuma.nix
             ./modules/dokuwiki.nix
             ./modules/immich.nix
+            ./modules/nextcloud.nix
           ];
         };
       };

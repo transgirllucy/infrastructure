@@ -3,11 +3,12 @@
 - Mastodon
 - Mailserver
 - Matrix Server
+- immich - photo and video managment
+
 
 
 # Upcoming SErvices
 
-immich - photo and video managment
 nextcloud
 gitea
 Grafana
