@@ -30,11 +30,10 @@
     enableACME = true;
   };
 
-
-services.nextcloud-whiteboard-server = {
-  enable = true;
-  settings.NEXTCLOUD_URL = "http://localhost";
-  secrets = [ /etc/secrets/nextcloud-whiteboard-secret ];
-};
+  services.nextcloud-whiteboard-server = {
+    enable = true;
+    settings.NEXTCLOUD_URL = "http://localhost";
+    secrets = [ /etc/secrets/nextcloud-whiteboard-secret ];
+  };
 
 }
