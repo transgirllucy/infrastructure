@@ -6,7 +6,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -63,7 +64,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucy = {
     isNormalUser = true;
-    extraGroups = ["wheel"]; # Enable ‘sudo’ for th user.
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for th user.
     packages = with pkgs; [
       tree
     ];
@@ -134,7 +135,8 @@
     "flakes"
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (lib.getName pkg) [
       "minecraft-server"
     ];
