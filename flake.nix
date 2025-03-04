@@ -14,64 +14,67 @@
     };
     simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
     hyprland.url = "github:hyprwm/Hyprland";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
-  outputs =
-    inputs@{
-      nixpkgs,
-      home-manager,
-      simple-nixos-mailserver,
-      self,
-      ...
-    }:
-    {
-      nixosConfigurations = {
-        # TODO please change the hostname to your own
-        gaming_laptop = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs; };
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/gaming_laptop/configuration.nix
-            #./firefox.nix
-            # make home-manager as a module of nixos
-            # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+  outputs = inputs @ {
+    nixpkgs,
+    home-manager,
+    simple-nixos-mailserver,
+    nix-minecraft,
+    self,
+    ...
+  }: {
+    nixosConfigurations = {
+      # TODO please change the hostname to your own
+      gaming_laptop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs;};
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/gaming_laptop/configuration.nix
+          #./firefox.nix
+          # make home-manager as a module of nixos
+          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
-              home-manager.users.lucy = import ./modules/home.nix;
-            }
-            ./modules/gaming.nix
-            ./modules/dwm.nix
-          ];
-        };
-        server = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = [
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+            home-manager.users.lucy = import ./modules/home.nix;
+          }
+          ./modules/gaming.nix
+          ./modules/dwm.nix
+        ];
+      };
+      server = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
 
-              home-manager.users.lucy = import ./modules/home.nix;
-            }
-            ./hosts/server/configuration.nix
-            simple-nixos-mailserver.nixosModule
-            ./modules/acme.nix
-            ./modules/mailserver.nix
-            ./modules/nginx.nix
-            ./modules/vaultwarden.nix
-            ./modules/postgresql.nix
-            ./modules/synapse.nix
-            ./modules/mastodon.nix
-            ./modules/jitsi.nix
-            ./modules/uptime-kuma.nix
-            ./modules/dokuwiki.nix
-            ./modules/immich.nix
-            ./modules/nextcloud.nix
-          ];
-        };
+            home-manager.users.lucy = import ./modules/home.nix;
+          }
+          ./hosts/server/configuration.nix
+          simple-nixos-mailserver.nixosModule
+          ./modules/acme.nix
+          ./modules/mailserver.nix
+          ./modules/nginx.nix
+          ./modules/vaultwarden.nix
+          ./modules/postgresql.nix
+          ./modules/synapse.nix
+          ./modules/mastodon.nix
+          ./modules/jitsi.nix
+          ./modules/uptime-kuma.nix
+          ./modules/immich.nix
+          ./modules/minecraft.nix
+          nix-minecraft.nixosModules.minecraft-servers
+          {
+            nixpkgs.overlays = [inputs.nix-minecraft.overlay];
+          }
+        ];
       };
     };
+  };
 }

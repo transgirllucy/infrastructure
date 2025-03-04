@@ -1,15 +1,12 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   config,
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -66,7 +63,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.lucy = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for th user.
+    extraGroups = ["wheel"]; # Enable ‘sudo’ for th user.
     packages = with pkgs; [
       tree
     ];
@@ -136,4 +133,9 @@
     "nix-command"
     "flakes"
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "minecraft-server"
+    ];
 }

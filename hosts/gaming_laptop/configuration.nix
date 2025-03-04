@@ -148,7 +148,7 @@
       pkgs.nvtop
       pkgs.pfetch
       pkgs.signal-desktop
-      pkgs.element-desktop
+      pkgs.cinny-desktop
       pkgs.texlive.combined.scheme-full
       pkgs.kitty
       pkgs.dmenu-wayland
@@ -192,7 +192,7 @@
   networking.firewall.allowedTCPPorts = [ 8000 ];
   networking.firewall.allowedUDPPorts = [ 8000 ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -432,6 +432,13 @@
         error_symbol = "[✗](bold red) ";
       };
     };
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; 
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
   };
 
 }
