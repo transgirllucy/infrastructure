@@ -6,7 +6,7 @@
   ...
 }:
 let
-  heart = "\u2764";
+  heart = "\\u2764";
 in
 {
   # Minecraft server settings
@@ -35,6 +35,7 @@ in
         max-players = 16;
         max-world-size = 29999984;
         motd = "${heart} made by bottoms for bottoms ${heart}  meow meow ${heart}";
+        spawn-protection = 0;
       };
 
       # Specify the custom minecraft server package
