@@ -4,9 +4,11 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   heart = "\u2764";
-in {
+in
+{
   # Minecraft server settings
   services.minecraft-servers = {
     enable = true;
@@ -15,7 +17,15 @@ in {
     servers.polycule = {
       enable = true;
 
-
+      whitelist = {
+        lucy = "e6c59dfa-41d5-432e-ac30-7383c362dbd9";
+        Bettle = "d53695fa-65ff-4d96-9eb9-fa5e9edccb79";
+        Spectre = "c30b5867-5712-48aa-be32-1d8129a7c670";
+        Lumin3ra = "ad088567-d813-4e8a-b82a-76d1210da444";
+        Ruby = "dba84e4c-e487-4d37-991f-9fcb9d96f12f";
+        Aria = "9864936c-0e53-4bb6-8436-4a88ee8cec97";
+        Angel = "1e635818-ddf4-4f7a-933d-25fffb1e0087";
+      };
 
       serverProperties = {
         allow-flight = true;
