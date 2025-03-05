@@ -4,11 +4,9 @@
   lib,
   inputs,
   ...
-}:
-let
-  heart = "\\u2764";
-in
-{
+}: let
+  heart = "u2764";
+in {
   # Minecraft server settings
   services.minecraft-servers = {
     enable = true;
@@ -18,13 +16,15 @@ in
       enable = true;
 
       whitelist = {
-        lucy = "e6c59dfa-41d5-432e-ac30-7383c362dbd9";
+        Lucy = "e6c59dfa-41d5-432e-ac30-7383c362dbd9";
         Bettle = "d53695fa-65ff-4d96-9eb9-fa5e9edccb79";
         Spectre = "c30b5867-5712-48aa-be32-1d8129a7c670";
         Lumin3ra = "ad088567-d813-4e8a-b82a-76d1210da444";
         Ruby = "dba84e4c-e487-4d37-991f-9fcb9d96f12f";
         Aria = "9864936c-0e53-4bb6-8436-4a88ee8cec97";
         Angel = "1e635818-ddf4-4f7a-933d-25fffb1e0087";
+        Terah = "746ddded-d9b7-4345-9a47-de8d1225a181";
+        Blue = "4a8b53e0-0f24-46c7-b588-932dd3958582";
       };
 
       serverProperties = {
@@ -34,7 +34,7 @@ in
         enable-command-block = true;
         max-players = 16;
         max-world-size = 29999984;
-        motd = "${heart} made by bottoms for bottoms ${heart}  meow meow ${heart}";
+        motd = "\/${heart} made by bottoms for bottoms \/${heart}  meow meow \/${heart}";
         spawn-protection = 0;
       };
 
@@ -365,6 +365,131 @@ in
             steamrails = pkgs.fetchurl {
               url = "https://mediafilez.forgecdn.net/files/5331/259/Steam_Rails-1.6.4%2Bfabric-mc1.19.2.jar";
               hash = "sha256-uuoTVJnZQW852Jog4YISdx4+VcHZ+HKz0VRJ5sbBcIA=";
+            };
+            #Macaw's Furniture
+            MacawsFurniture = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5589/835/mcw-furniture-3.3.0-mc1.19.2fabric.jar";
+              hash = "sha256-RGJWoszYYD9tYakWNsA9jE6VggntJjQhIiQ93VR8qTk=";
+            };
+            #Macaw's Paths and Pavings
+            MacawsPathsandPavings = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6244/66/mcw-paths-1.1.0fabric-mc1.19.2.jar";
+              hash = "sha256-DhbIjy9FkfzCMm+dA64D1KgxJ3QEhZsE0Ltn9JB02Xk=";
+            };
+            #Cucumber Library
+            CucumberLibrary = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4610/684/Cucumber-Refabricated-1.19.2-1.0.6.jar";
+              hash = "sha256-UyNDtzVkByrXoIc4kXzzAJWJ0Bme0Hqetzz/mcfn86k=";
+            };
+            #Forge Config Api
+            ForgeConfigApi = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4401/535/ForgeConfigAPIPort-v4.2.11-1.19.2-Fabric.jar";
+              hash = "sha256-vWnwxoN8cY19vXQW+8Tb/sv6ca8aH0CbPs35C41w8JM=";
+            };
+            #Mystical Agriculture
+            MysticalAgriculture = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4614/164/MysticalAgriculture-Refabricated-1.19.2-2.0.8.jar";
+              hash = "sha256-qVNnqRU+wQshQzRsZ3n4JiSlZYBo0qI5FLGr/m6JC3M=";
+            };
+            #playerAnimator
+            playerAnimator = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4418/150/player-animation-lib-fabric-1.0.2.jar";
+              hash = "sha256-Y5Q/Numw9h4GsW7TXFY174fyS9NrfkEc0YzGk8plw4Q=";
+            };
+            #Better Combat
+            BetterCombat = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4534/620/bettercombat-fabric-1.7.1%2B1.19.jar";
+              hash = "sha256-VA3QDJptOttN0rqroh2Ond14lFXprLmE7BEkCxHFcKQ=";
+            };
+            #BCLib
+            BCLib = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4986/808/bclib-2.1.8.jar";
+              hash = "sha256-+f2Bckd0v658L4PqKcRJsxrXbYsle6DwhHpd+MyRb0s=";
+            };
+            #betterend
+            BetterEnd = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4986/810/better-end-2.1.7.jar";
+              hash = "sha256-Fzax425CiQso3NfTNJ3jUrEmYgP/uSCalAqeXEEJgi4=";
+            };
+            #betternether
+            BetterNether = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5616/564/better-nether-21.0.11.jar";
+              hash = "sha256-tGCAcf9Z1Z+5NS8Td0xUI7Di6wDfIc6JhkNEBOb2dDM=";
+            };
+            #Clumbs
+            Clumbs = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4153/346/Clumps-fabric-1.19.2-9.0.0%2B14.jar";
+              hash = "sha256-G3ZShCHO32myf3CkpJ95q3ssODL2KRAumDNsFz5dY30=";
+            };
+            #FTB Ultimine
+            FTBUltimine = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5670/776/ftb-ultimine-fabric-1902.4.2-build.14.jar";
+              hash = "sha256-8lGQfT5CpZt5hyXAwHIfi3sduLjBC5Ac9FbKHAPk6HE=";
+            };
+            #Collective
+            Colletive = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5460/518/collective-1.19.2-7.64.jar";
+              hash = "sha256-npF2trVMtRhukJVhO/PpWkfGgncR9CBabiCCDovCvB0=";
+            };
+            #Double Doors
+            DoubleDoors = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5334/520/doubledoors-1.19.2-5.7.jar";
+              hash = "sha256-4VbbCSr1QMhIKPI5QueETg66SJQX8IUJHYEJqhXGQmg=";
+            };
+            #Fabric Seasons
+            FabricSeasons = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4699/684/fabric-seasons-2.3%2B1.19.jar";
+              hash = "sha256-ihAEtTnx7kDlSZ+MpkG2PFkI10+hzKPVYZY7DZL9Ex8=";
+            };
+            #McPitanLib
+            McPitanLib = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6160/201/mcpitanlib-3.1.5-1.19.2-fabric.jar";
+              hash = "sha256-Bz9EVjXNKKMSl201fU0iW6leONDH5wDDSj8Sd5j4mOc=";
+            };
+            #Uncrafting Table
+            UncraftingTable = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6136/588/UncraftingTable-fabric-1.4.5.jar";
+              hash = "sha256-c1GfQh8r83fErV3WPXSg7IWPBvcITWx3Z+nX+i3q8bY=";
+            };
+            #Valkyrian Skys
+            ValkyrianSkys = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4994/897/valkyrienskies-119-2.1.2-beta.1.jar";
+              hash = "sha256-2Rs8F9PY6F9NwD1aHtk9n/Jas41mO5OTfVtRf5+7zuk=";
+            };
+            #Clockwork
+            Clockworks = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5171/527/clockwork-1.19.2-0.1.13-fabric-4621aeec07.jar";
+              hash = "sha256-Vz86S2nf5YEij2CU7K5f73bhgjkMEl02EdtzYqAIbPk=";
+            };
+            #Botania
+            Botania = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5608/809/Botania-1.19.2-440.2-FABRIC.jar";
+              hash = "sha256-i600B9eTmhifj8+NRoRTFzXFNaz7Hwp9pvT2S+1z8p0=";
+            };
+            #MrCrayfish's Furniture
+            MrCrayfishsFurniture = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6186/452/refurbished_furniture-fabric-1.19.2-1.0.9.jar";
+              hash = "sha256-Pd/cwV+b8P66x3E86q2vQWYlECjmIbV0+0T5TmtE5LE=";
+            };
+            #Moonlight Lib
+            MoonlightLib = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5567/103/moonlight-1.19.2-2.3.7-fabric.jar";
+              hash = "sha256-12h2Sa/Ip/qXvnRCcZQGv6TJnsRI5jC+ouUsjjmiI1Y=";
+            };
+            #Supplementaries
+            Supplementaries = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5226/669/supplementaries-1.19.2-2.4.21-fabric.jar";
+              hash = "sha256-iW1TtFJhRfQT4hnzvD9Cmio+0VUoKi7gpxjo2+4yd0o=";
+            };
+            #Macow's Roofs
+            MacowsRoofs = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5554/923/mcw-roofs-2.3.1-mc1.19.2fabric.jar";
+              hash = "sha256-oJcVbF/1KGSMY/ta6WANO9g2yx7NqyuENzZ8+IW7bt4=";
+            };
+            #Chunkloaders
+            Chunkloaders = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4809/753/chunkloaders-1.2.8a-fabric-mc1.19.2.jar";
+              hash = "sha256-L3uEISVVc3i8GAkax+Z/t870dWk14HktBpaGe9OiTXk=";
             };
           }
         );
