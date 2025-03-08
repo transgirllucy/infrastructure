@@ -4,9 +4,11 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   heart = "u2764";
-in {
+in
+{
   # Minecraft server settings
   services.minecraft-servers = {
     enable = true;
@@ -413,8 +415,8 @@ in {
             };
             #betternether
             BetterNether = pkgs.fetchurl {
-              url = "https://mediafilez.forgecdn.net/files/5616/564/better-nether-21.0.11.jar";
-              hash = "sha256-tGCAcf9Z1Z+5NS8Td0xUI7Di6wDfIc6JhkNEBOb2dDM=";
+              url = "https://mediafilez.forgecdn.net/files/4986/817/better-nether-7.1.5.jar";
+              hash = "sha256-KsUmdUBfih8/6lFBI6VctN3X+6usIIzS2q/Vf4UJfos=";
             };
             #Clumbs
             Clumbs = pkgs.fetchurl {
@@ -490,6 +492,71 @@ in {
             Chunkloaders = pkgs.fetchurl {
               url = "https://mediafilez.forgecdn.net/files/4809/753/chunkloaders-1.2.8a-fabric-mc1.19.2.jar";
               hash = "sha256-L3uEISVVc3i8GAkax+Z/t870dWk14HktBpaGe9OiTXk=";
+            };
+            #sophisticatedbackpacks
+            sophisticatedbackpacks = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5803/830/sophisticatedbackpacks-1.19.2-3.20.2.22.jar";
+              hash = "sha256-TeWI17wvS24GLs+gd4krlVsZGBvkcoU0WsdzPqBgyfc=";
+            };
+            #sophisticatedcore
+            sophisticatedcore = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5803/819/sophisticatedcore-1.19.2-0.6.4.30.jar";
+              hash = "sha256-QB9j44mIc9+sDXJXh+avCiWU9IU5v3bOIhjRHuFbo+Q=";
+            };
+            #sophisticatedstorage
+            sophisticatedstorage = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5803/875/sophisticatedstorage-1.19.2-0.9.7.19.jar";
+              hash = "sha256-Zk34GI7pIwScJedWJe4d/aX6xFUI25W14VL2c1g0rV4=";
+            };
+            #Eureka
+            Eureka = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5321/627/eureka-1192-1.5.1-beta.2.jar";
+              hash = "sha256-+Z2c7diZRw1lvticRLR/GmuPABDbYySu3pyTwKKeyfY=";
+            };
+            #simplyswords
+            simplyswords = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4553/235/simplyswords-fabric-1.47.0-1.19.2.jar";
+              hash = "sha256-C5UKjty7SrRwE5DjClaqh6+0NkN4HIsHZXbZ2tZvV2U=";
+            };
+            #Zenith
+            Zenith = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5175/226/zenith-0.7.3%2B1.19.2%20.jar";
+              hash = "sha256-zsVeu6mc1psbDv8NlQaD0YgDrVJdo0SzQNvD3weynDM=";
+            };
+            #dataattributes
+            dataattributes = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4580/191/dataattributes-1.4.6%2B1.19.2.jar";
+              hash = "sha256-N+X6uDt2VHuib1BVYVuUTLUhgbJ/i+JqBd8bgdQtptk=";
+            };
+            #playerex
+            playerex = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/4608/785/playerex-3.5.4%2B1.19.2.jar";
+              hash = "sha256-9kl9QHNF+x3FCsEXN0ZZM+P/6ZD1uXQYh+pqG8L/iIE=";
+            };
+            #simplevoicechat
+            simplevoicechat = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6239/595/voicechat-fabric-1.19.2-2.5.28.jar";
+              hash = "sha256-VQZpZCjK7scEPOpWI+gxHPeyc1uq2ysZVbFSIvz+qPk=";
+            };
+            #macawsandbioms
+            macawsandbioms = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6196/872/mcwbyg-fabric-1.19-1.1.jar";
+              hash = "sha256-hpmya3URIJYn3jV2MrVipNtMNxY8ZnhUIQaNmCzL+9M=";
+            };
+            #updatefixerupper
+            updatefixerupper = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/3909/688/updatefixerupper-1.0.2.jar";
+              hash = "sha256-cPvWU1x3fnnS8TquwipT00QRL3e3FYEnCk6xIn+GIa4=";
+            };
+            # addonslib
+            addonslib = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/6192/759/addonslib-fabric-1.19-1.3.jar";
+              hash = "sha256-QfWuDwGQfnB3eO7X2KK7jdgq/HuiuWcgKVvvhT4JroY=";
+            };
+            # framework
+            framework = pkgs.fetchurl {
+              url = "https://mediafilez.forgecdn.net/files/5692/376/framework-fabric-1.19.2-0.7.12.jar";
+              hash = "sha256-9ar4i5Jz+Qv3KNCYM3FCle167GdgTac9P8qzYnWqGdU=";
             };
           }
         );
