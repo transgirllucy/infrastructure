@@ -4,7 +4,7 @@ gaming_laptop:
 twinkpad:
 	nixos-rebuild switch --flake .#twinkpad --verbose -v --use-remote-sudo --upgrade
 router:
-	nixos-rebuild switch --flake .#router --target-host root@192.168.178.2 --use-remote-sudo --upgrade --verbose 
+	nixos-rebuild switch --flake .#router --target-host root@10.8.0.1 --use-remote-sudo --upgrade --verbose 
 format:
 	nixfmt *.nix && nixfmt */*/*.nix && nixfmt modules/*.nix
 server:
