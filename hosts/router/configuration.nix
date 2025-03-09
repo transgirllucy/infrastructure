@@ -114,6 +114,7 @@
       ethtool # manage NIC settings (offload, NIC feeatures, ...)
       tcpdump # view network traffic
       conntrack-tools # view network connection states
+      neofetch
     ];
   };
 
@@ -255,4 +256,20 @@
     };
   };
   services.tailscale.enable = true;
+  services.iperf3 = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  services.kresd = {
+    enable = true;
+    extraConfig = ''
+      policy.add(policy.all(policy.TLS_FORWARD({
+        {'9.9.9.9', hostname='dns.quad9.net'},
+        {'149.112.112.112', hostname='dns.quad9.net'},
+        {'2620:fe::fe', hostname='dns.quad9.net'},
+        {'2620:fe::9', hostname='dns.quad9.net'},
+      })))
+    '';
+  };
 }
