@@ -31,11 +31,11 @@
     {
       nixosConfigurations = {
         # TODO please change the hostname to your own
-        gaming_laptop = nixpkgs.lib.nixosSystem {
+        p50 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           system = "x86_64-linux";
           modules = [
-            ./hosts/gaming_laptop/configuration.nix
+            ./hosts/p50/configuration.nix
             #./firefox.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -47,7 +47,6 @@
               home-manager.users.lucy = import ./modules/home.nix;
             }
             ./modules/gaming.nix
-            ./modules/dwm.nix
           ];
         };
         router = nixpkgs.lib.nixosSystem {

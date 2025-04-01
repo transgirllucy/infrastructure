@@ -1,13 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}:
-{
-  imports = [
-    ./emacs.nix
-    ./hyprland.nix
-  ];
+{ config, pkgs, ... }: {
+  imports = [ ./helix.nix ./alacritty.nix ./nushell.nix ];
 
   # TODO please change the username & home directory to your own
   home.username = "lucy";
@@ -98,6 +90,9 @@
     usbutils # lsusb
 
     tcsh
+
+    (dwl.override { conf = ./dwl/config.h; })
+    somebar
   ];
 
   # basic configuration of git, please change to your own

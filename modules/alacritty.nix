@@ -1,7 +1,7 @@
 { ... }: {
   programs.alacritty.enable = true;
   programs.alacritty.settings = {
-    window.opacity = 0.4;
+    window.opacity = 0.8;
     colors.bright = {
       black = "#444b6a";
       blue = "#7da6ff";
@@ -25,6 +25,25 @@
     colors.primary = {
       background = "#1a1b26";
       foreground = "#a9b1d6";
+    };
+    font = {
+      normal = {
+        family = "Iosevka";
+        style = "Regular";
+      };
+      bold = {
+        family = "Iosevka";
+        style = "Bold";
+      };
+      italic = {
+        family = "Iosevka";
+        style = "Italic";
+      };
+      bold_italic = {
+        family = "Iosevka";
+        style = "Bold Italic";
+      };
+      size = 18.0; # Adjust the font size as needed
     };
   };
 }

@@ -5,10 +5,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -17,7 +17,8 @@
   networking.hostName = toString null; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -36,9 +37,10 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  programs.sway.enable = true;
 
-  
+  services.xserver.displayManager.lightdm.enable = false;
+
+  services.displayManager.ly.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -50,41 +52,55 @@
   # Enable sound.
   # hardware.pulseaudio.enable = true;
   # OR
-   services.pipewire = {
-     enable = true;
-     pulse.enable = true;
-   };
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-   users.users.lucy = {
-     isNormalUser = true;
-     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-     packages = with pkgs; [
-       tree
-       wofi 
-       alacritty
-     ];
+
+  users.users.lucy = {
+    isNormalUser = true;
+    extraGroups = [ "libvirtd" "wheel" ]; # Enable ‘sudo’ for the user.
+    packages = with pkgs; [
+      tree
+      wofi
+      alacritty
+      dmenu
+      nheko
+      fuzzel
+      wl-clipboard
+      (discord.override {
+        withOpenASAR = true;
+        withVencord = true; # can do this here too
+      })
+      xwayland-satellite
+      mako
+      waypaper
+      swaybg
+    ];
+    shell = pkgs.nushell;
   };
 
   programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-   ];
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-   programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 
@@ -121,5 +137,94 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.11"; # Did you read the comment?
 
-}
+  hardware.opengl = { enable = true; };
 
+  nix = {
+    package = pkgs.lix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
+  security.polkit.enable = true;
+
+  nixpkgs.config = {
+    permittedInsecurePackages = [ "olm-3.2.16" ];
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "discord" ];
+  };
+
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
+
+  programs.thunderbird.enable = true;
+
+  programs.htop.enable = true;
+
+  fonts.packages = with pkgs; [
+    nerd-fonts._3270
+    nerd-fonts.agave
+    nerd-fonts.anonymice
+    nerd-fonts.arimo
+    nerd-fonts.aurulent-sans-mono
+    nerd-fonts.bigblue-terminal
+    nerd-fonts.bitstream-vera-sans-mono
+    nerd-fonts.blex-mono
+    nerd-fonts.caskaydia-cove
+    nerd-fonts.caskaydia-mono
+    nerd-fonts.code-new-roman
+    nerd-fonts.comic-shanns-mono
+    nerd-fonts.commit-mono
+    nerd-fonts.cousine
+    nerd-fonts.d2coding
+    nerd-fonts.daddy-time-mono
+    nerd-fonts.departure-mono
+    nerd-fonts.dejavu-sans-mono
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.envy-code-r
+    nerd-fonts.fantasque-sans-mono
+    nerd-fonts.fira-code
+    nerd-fonts.fira-mono
+    nerd-fonts.geist-mono
+    nerd-fonts.go-mono
+    nerd-fonts.gohufont
+    nerd-fonts.hack
+    nerd-fonts.hasklug
+    nerd-fonts.heavy-data
+    nerd-fonts.hurmit
+    nerd-fonts.im-writing
+    nerd-fonts.inconsolata
+    nerd-fonts.inconsolata-go
+    nerd-fonts.inconsolata-lgc
+    nerd-fonts.intone-mono
+    nerd-fonts.iosevka-term
+    nerd-fonts.iosevka-term-slab
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.lekton
+    nerd-fonts.liberation
+    nerd-fonts.lilex
+    nerd-fonts.martian-mono
+    nerd-fonts.meslo-lg
+    nerd-fonts.monaspace
+    nerd-fonts.monofur
+    nerd-fonts.monoid
+    nerd-fonts.mononoki
+    nerd-fonts.mplus
+    nerd-fonts.noto
+    nerd-fonts.open-dyslexic
+    nerd-fonts.overpass
+    nerd-fonts.profont
+    nerd-fonts.proggy-clean-tt
+    nerd-fonts.recursive-mono
+    nerd-fonts.roboto-mono
+    nerd-fonts.shure-tech-mono
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.space-mono
+    nerd-fonts.symbols-only
+    nerd-fonts.terminess-ttf
+    nerd-fonts.tinos
+    nerd-fonts.ubuntu
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.ubuntu-sans
+    nerd-fonts.victor-mono
+    nerd-fonts.zed-mono
+    iosevka
+  ];
+}

@@ -2,11 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config
-, lib
-, pkgs
-, ...
-}:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [
@@ -16,57 +12,20 @@
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/nvme0n1";
   # boot.loader.grub.efiSupport = true;
   # boot.loader.grub.efiInstallAsRemovable = true;
   # boot.loader.efi.efiSysMountPoint = "/boot/efi";
   # Define on which hard drive you want to install Grub.
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  networking = {
-    useDHCP = false;
-    hostName = "router";
-    nameservers = [ "9.9.9.9" ];
-
-    bridges.switch.interfaces = map (x: "enp${toString x}s0") [
-      2
-      3
-      4
-    ];
-
-    interfaces = {
-      # Don't request DHCP on the physical interfaces
-      enp1s0.useDHCP = false;
-      enp2s0.useDHCP = false;
-      enp3s0.useDHCP = false;
-      enp4s0.useDHCP = false;
-      enp1s0 = {
-        ipv4.addresses = [
-          {
-            address = "192.168.178.2";
-            prefixLength = 24;
-          }
-        ];
-      };
-      switch = {
-        ipv4.addresses = [
-          {
-            address = "10.8.0.1";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
-    defaultGateway = {
-      address = "192.168.178.1";
-      interface = "enp1s0";
-    };
-  };
+  # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Europe/Helsinki";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -105,16 +64,7 @@
   users.users.lucy = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-      vim # my preferred editor
-      htop # to see the system load
-      ppp # for some manual debugging of pppd
-      ethtool # manage NIC settings (offload, NIC feeatures, ...)
-      tcpdump # view network traffic
-      conntrack-tools # view network connection states
-      neofetch
-    ];
+    packages = with pkgs; [ tree ];
   };
 
   # programs.firefox.enable = true;
@@ -143,7 +93,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  # networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -168,107 +118,6 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.11"; # Did you read the comment?
-  boot.kernelParams = [ "console=ttyS0,115200n8" ];
-  boot.loader.grub.extraConfig = "
-   serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
-   terminal_input serial
-   terminal_output serial
- ";
 
-  boot.kernel.sysctl = {
-    # if you use ipv4, this is all you need
-    "net.ipv4.conf.all.forwarding" = true;
-
-    # If you want to use it for ipv6
-    "net.ipv6.conf.all.forwarding" = true;
-
-    # source: https://github.com/mdlayher/homelab/blob/master/nixos/routnerr-2/configuration.nix#L52
-    # By default, not automatically configure any IPv6 addresses.
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.all.autoconf" = 0;
-    "net.ipv6.conf.all.use_tempaddr" = 0;
-
-  };
-
-  networking.nftables = {
-    enable = true;
-    ruleset = ''
-      table ip nat {
-        chain prerouting {
-          type nat hook prerouting priority filter; policy accept;
-        }
-
-        # Setup NAT masquerading on the LAN interfaces if needed
-        chain postrouting {
-          type nat hook postrouting priority filter; policy accept;
-          oifname { "enp1s0" } masquerade
-        }
-      }
-    '';
-  };
-
-  nix = {
-    package = pkgs.lix;
-    trustedUsers = [ "lucy" ];
-  };
-
-  services.kea = {
-    dhcp4 = {
-      enable = true;
-      settings = {
-        interfaces-config = {
-          interfaces = [
-            "switch"
-          ];
-        };
-        lease-database = {
-          name = "/var/lib/kea/dhcp4.leases";
-          persist = true;
-          type = "memfile";
-        };
-        rebind-timer = 2000;
-        renew-timer = 1000;
-        subnet4 = [
-          {
-            id = 1;
-            pools = [
-              {
-                pool = "10.8.0.100 - 10.8.0.240";
-              }
-            ];
-            option-data = [
-              {
-                name = "routers";
-                data = "10.8.0.1";
-              }
-              {
-                name = "domain-name-servers";
-                data = "9.9.9.9";
-                always-send = true;
-              }
-            ];
-            subnet = "10.8.0.0/24";
-          }
-        ];
-        valid-lifetime = 4000;
-      };
-    };
-  };
-  services.tailscale.enable = true;
-  services.iperf3 = {
-    enable = true;
-    openFirewall = true;
-  };
-
-  services.kresd = {
-    enable = true;
-    extraConfig = ''
-      policy.add(policy.all(policy.TLS_FORWARD({
-        {'9.9.9.9', hostname='dns.quad9.net'},
-        {'149.112.112.112', hostname='dns.quad9.net'},
-        {'2620:fe::fe', hostname='dns.quad9.net'},
-        {'2620:fe::9', hostname='dns.quad9.net'},
-      })))
-    '';
-  };
 }
+
