@@ -1,15 +1,11 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
-{
+{ config, pkgs, lib, ... }: {
   services.mastodon = {
     enable = true;
     localDomain = "cuddles.jetzt";
     configureNginx = true;
     smtp.fromAddress = "noreply@cuddles.jetzt";
-
+    database.createLocally = false;
+    database.host = "127.0.0.1";
     extraConfig = {
       MAX_POLL_OPTION_CHARS = "200";
       MAX_POLL_OPTIONS = "10";

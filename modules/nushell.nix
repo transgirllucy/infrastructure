@@ -96,6 +96,13 @@
         vi = "hx";
         nvim = "hx";
         vim = "hx";
+        devenv-init = "nix flake init --template github:cachix/devenv";
+        devenv-enter = "nix develop --impure";
+        rust-init = "nix flake init --template templates#rust";
+        c-init = "nix flake init --template templates#c-hello";
+        go-hello = "nix flake init --template templates#go-hello";
+        haskell-hello = "nix flake init --template templates#haskell-hello";
+        neofetch = "hyfetch";
       };
     };
     carapace.enable = true;

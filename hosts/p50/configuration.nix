@@ -11,10 +11,15 @@
   ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;
+    useOSProber = true;
+    device = "nodev";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = toString null; # Define your hostname.
+  networking.hostName = "MolligeSpermaHure"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable =
@@ -64,9 +69,15 @@
 
   users.users.lucy = {
     isNormalUser = true;
-    extraGroups = [ "libvirtd" "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "networkmanager"
+      "libvirtd"
+      "wheel"
+      "input"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
+      deploy-rs
       wofi
       alacritty
       dmenu
@@ -81,6 +92,38 @@
       mako
       waypaper
       swaybg
+      libreoffice
+      ookla-speedtest
+      acpi
+      teamspeak3
+      nload
+      gajim
+      kdePackages.itinerary
+      signal-desktop
+      # support both 32- and 64-bit applications
+      wineWowPackages.stable
+
+      # support 32-bit only
+      wine
+
+      # support 64-bit only
+      (wine.override { wineBuild = "wine64"; })
+
+      # support 64-bit only
+      wine64
+
+      # wine-staging (version with experimental features)
+      wineWowPackages.staging
+
+      # winetricks (all versions)
+      winetricks
+
+      # native wayland support (unstable)
+      wineWowPackages.waylandFull
+      gnucash
+      mumble
+      distrobox
+      scrcpy
     ];
     shell = pkgs.nushell;
   };
@@ -105,13 +148,13 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
@@ -148,7 +191,16 @@
 
   nixpkgs.config = {
     permittedInsecurePackages = [ "olm-3.2.16" ];
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "discord" ];
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "discord"
+        "ookla-speedtest"
+        "teamspeak3"
+        "steam"
+        "steam-unwrapped"
+        "steam-original"
+        "steam-run"
+      ];
   };
 
   virtualisation.libvirtd.enable = true;
@@ -206,7 +258,6 @@
     nerd-fonts.monofur
     nerd-fonts.monoid
     nerd-fonts.mononoki
-    nerd-fonts.mplus
     nerd-fonts.noto
     nerd-fonts.open-dyslexic
     nerd-fonts.overpass
@@ -227,4 +278,58 @@
     nerd-fonts.zed-mono
     iosevka
   ];
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall =
+      true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall =
+      true; # Open ports in the firewall for Source Dedicated Server
+  };
+  services.xserver.windowManager.i3.enable = true;
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
+
+  services.tailscale.enable = true;
+
+  c3d2 = {
+    audioStreaming = true;
+    configurePrinting = true;
+    configureWifi = true;
+  };
+  services.emacs.enable = true;
+
+  systemd.tmpfiles.rules =
+    [ "L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware" ];
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+    "riscv64-linux"
+    "alpha-linux"
+    "armv6l-linux"
+    "armv7l-linux"
+    "i386-linux"
+    "i486-linux"
+    "i586-linux"
+    "i686-linux"
+    "i686-windows"
+    "loongarch64-linux"
+    "mips-linux"
+    "mips64-linux"
+    "mips64-linuxabin32"
+    "mips64el-linux"
+    "mips64el-linuxabin32"
+    "mipsel-linux"
+    "powerpc-linux"
+    "powerpc64-linux"
+    "powerpc64le-linux"
+    "riscv32-linux"
+    "s390x-linux"
+    "sparc-linux"
+    "sparc64-linux"
+  ];
+
+  programs.adb.enable = true;
 }

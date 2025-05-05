@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
-  imports = [ ./helix.nix ./alacritty.nix ./nushell.nix ];
+  imports =
+    [ ./helix.nix ./alacritty.nix ./nushell.nix ./chromium.nix ./emacs.nix ];
 
   # TODO please change the username & home directory to your own
   home.username = "lucy";
@@ -26,8 +27,12 @@
     # here is some command line tools I use frequently
     # feel free to add your own or remove some of them
 
-    neofetch
+    aerc
+
+    hyfetch
     nnn # terminal file manager
+
+    prismlauncher
 
     # archives
     zip
@@ -90,9 +95,6 @@
     usbutils # lsusb
 
     tcsh
-
-    (dwl.override { conf = ./dwl/config.h; })
-    somebar
   ];
 
   # basic configuration of git, please change to your own

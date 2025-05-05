@@ -1,8 +1,4 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
+{ config, pkgs, lib, inputs, ... }:
 let
   fqdn = "matrix.nix2twink.gay";
   baseUrl = "https://${fqdn}";
@@ -13,8 +9,11 @@ let
     add_header Access-Control-Allow-Origin *;
     return 200 '${builtins.toJSON data}';
   '';
-in
-{
+  synapseCfg = config.services.matrix-synapse;
+  homeserverDomain = synapseCfg.settings.server_name;
+  homeserverLocalPort =
+    builtins.toString (builtins.elemAt synapseCfg.settings.listeners 0).port;
+in {
 
   services.nginx.virtualHosts = {
     # records for myhostname.example.org, you can easily move the /.well-known
@@ -31,11 +30,13 @@ in
       # is 8448.
       # Further reference can be found in the docs about delegation under
       # https://element-hq.github.io/synapse/latest/delegate.html
-      locations."= /.well-known/matrix/server".extraConfig = mkWellKnown serverConfig;
+      locations."= /.well-known/matrix/server".extraConfig =
+        mkWellKnown serverConfig;
       # This is usually needed for homeserver discovery (from e.g. other Matrix clients).
       # Further reference can be found in the upstream docs at
       # https://spec.matrix.org/latest/client-server-api/#getwell-knownmatrixclient
-      locations."= /.well-known/matrix/client".extraConfig = mkWellKnown clientConfig;
+      locations."= /.well-known/matrix/client".extraConfig =
+        mkWellKnown clientConfig;
     };
     "${fqdn}" = {
       enableACME = true;
@@ -54,32 +55,68 @@ in
     };
   };
 
+  services.matrix-appservices = {
+    inherit homeserverDomain;
+
+    addRegistrationFiles = true;
+
+    services.whatsapp = {
+      port = 29183;
+      format = "mautrix-go";
+      package = pkgs.mautrix-whatsapp;
+    };
+
+    services.discord = {
+      port = 29334;
+      format = "mautrix-go";
+      package = pkgs.mautrix-discord;
+      settings = {
+        bridge = {
+          encryption = {
+            allow = true;
+            default = true;
+            allow_key_sharing = true;
+          };
+          backfill.forward_limits = {
+            initial = {
+              dm = 50;
+              channel = 50;
+              thread = 50;
+            };
+            missed = {
+              dm = -1;
+              channel = -1;
+              thread = -1;
+            };
+          };
+          media_patterns.enabled = true;
+        };
+        homeserver = {
+          address = "http://localhost:${homeserverLocalPort}";
+          async_media = true;
+        };
+        logging.min_level = "info";
+      };
+    };
+  };
+
   services.matrix-synapse = {
     enable = true;
     settings = {
       server_name = "nix2twink.gay";
       public_baseurl = baseUrl;
-      listeners = [
-        {
-          port = 8008;
-          bind_addresses = [ "::1" ];
-          type = "http";
-          tls = false;
-          x_forwarded = true;
-          resources = [
-            {
-              names = [
-                "client"
-                "federation"
-              ];
-              compress = true;
-            }
-          ];
-        }
-      ];
+      listeners = [{
+        port = 8008;
+        bind_addresses = [ "::1" ];
+        type = "http";
+        tls = false;
+        x_forwarded = true;
+        resources = [{
+          names = [ "client" "federation" ];
+          compress = true;
+        }];
+      }];
     };
-    extraConfigFiles = [
-      "/var/lib/matrix-synapse/shared-secret"
-    ];
+    extraConfigFiles = [ "/var/lib/matrix-synapse/shared-secret" ];
   };
 }

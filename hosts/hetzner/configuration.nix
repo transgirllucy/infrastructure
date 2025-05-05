@@ -64,17 +64,18 @@
   users.users.lucy = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [ tree ];
+    packages = with pkgs; [ scdl tree nload htop neofetch iftop iotop btop ];
   };
 
   # programs.firefox.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  # ];
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    sshfs
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -90,8 +91,8 @@
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 80 443 6443 ];
+  networking.firewall.allowedUDPPorts = [ 6443 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -119,5 +120,18 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "24.11"; # Did you read the comment?
 
-}
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "minecraft-server" ];
 
+  nixpkgs.config.permittedInsecurePackages =
+    [ "olm-3.2.16" "jitsi-meet-1.0.8043" ];
+
+  programs.tmux.enable = true;
+
+  nix = {
+    package = pkgs.lix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
+  programs.mosh.enable = true;
+}
